@@ -10,9 +10,12 @@ function Rankings() {
 
   const { jobId } = useParams();
 
+  // ✅ BASE URL FROM ENV
+  const API = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/ranking/${jobId}`)
+      .get(`${API}/api/ranking/${jobId}`)
       .then((res) => {
         setRankings(res.data);
         setLoading(false);
@@ -22,32 +25,26 @@ function Rankings() {
         setError("Failed to load rankings");
         setLoading(false);
       });
-  }, [jobId]);
+  }, [jobId, API]);
 
   const getScoreColor = (score) => {
     if (score >= 80)
       return "linear-gradient(90deg,#22c55e,#4ade80)";
-
     if (score >= 60)
       return "linear-gradient(90deg,#f59e0b,#fbbf24)";
-
     return "linear-gradient(90deg,#ef4444,#f87171)";
   };
 
-  const handleAction = async (
-    candidateId,
-    action
-  ) => {
+  const handleAction = async (candidateId, action) => {
     try {
       await axios.post(
-        `http://localhost:5000/api/ranking/${candidateId}/${action}`
+        `${API}/api/ranking/${candidateId}/${action}`
       );
 
       if (action === "reject") {
         setRankings((prev) =>
           prev.filter(
-            (item) =>
-              item.candidate._id !== candidateId
+            (item) => item.candidate._id !== candidateId
           )
         );
         return;
@@ -55,9 +52,7 @@ function Rankings() {
 
       setRankings((prev) =>
         prev.map((item) => {
-          if (
-            item.candidate._id === candidateId
-          ) {
+          if (item.candidate._id === candidateId) {
             return {
               ...item,
               candidate: {
@@ -66,13 +61,11 @@ function Rankings() {
               },
             };
           }
-
           return item;
         })
       );
     } catch (err) {
       console.log(err);
-
       alert("Action failed");
     }
   };
@@ -88,9 +81,7 @@ function Rankings() {
             textAlign: "center",
           }}
         >
-          <h2>
-            ⏳ Loading Rankings...
-          </h2>
+          <h2>⏳ Loading Rankings...</h2>
         </div>
       </div>
     );
@@ -108,26 +99,16 @@ function Rankings() {
 
   return (
     <div className="ai-page">
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-        }}
-      >
-        <h1 className="ai-title">
-          🏆 AI Candidate Rankings
-        </h1>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        <h1 className="ai-title">🏆 AI Candidate Rankings</h1>
 
         <p className="ai-subtitle">
-          Discover the best candidates
-          using AI-powered matching.
+          Discover the best candidates using AI-powered matching.
         </p>
 
         {rankings.length === 0 ? (
           <div className="ai-container">
-            <h2>
-              No Candidates Available
-            </h2>
+            <h2>No Candidates Available</h2>
           </div>
         ) : (
           rankings.map((item, index) => (
@@ -136,19 +117,17 @@ function Rankings() {
               className="ai-container"
               style={{
                 marginBottom: "25px",
-
                 border:
                   index === 0
                     ? "2px solid rgba(255,215,0,0.5)"
                     : undefined,
               }}
             >
-              {/* Header */}
+              {/* HEADER */}
               <div
                 style={{
                   display: "flex",
-                  justifyContent:
-                    "space-between",
+                  justifyContent: "space-between",
                   alignItems: "center",
                   flexWrap: "wrap",
                   gap: "15px",
@@ -156,358 +135,140 @@ function Rankings() {
               >
                 <h2>
                   {index === 0 && "🥇 "}
-                  #{index + 1}{" "}
-                  {item.candidate.name}
+                  #{index + 1} {item.candidate.name}
                 </h2>
 
                 <span
                   style={{
-                    padding:
-                      "10px 18px",
-
-                    borderRadius:
-                      "30px",
-
+                    padding: "10px 18px",
+                    borderRadius: "30px",
                     background:
                       index === 0
                         ? "linear-gradient(90deg,#FFD700,#FFB800)"
                         : "rgba(255,255,255,0.12)",
-
-                    color:
-                      index === 0
-                        ? "#111827"
-                        : "white",
-
-                    fontWeight:
-                      "700",
+                    color: index === 0 ? "#111827" : "white",
+                    fontWeight: "700",
                   }}
                 >
                   Rank {index + 1}
                 </span>
               </div>
 
-              <div
-                style={{
-                  marginTop: "20px",
-                  lineHeight: "2",
-                }}
-              >
+              {/* DETAILS */}
+              <div style={{ marginTop: "20px", lineHeight: "2" }}>
                 <p>
-                  <strong>
-                    Email:
-                  </strong>{" "}
-                  {
-                    item.candidate
-                      .email
-                  }
+                  <strong>Email:</strong>{" "}
+                  {item.candidate.email}
                 </p>
 
                 <p>
-                  <strong>
-                    Experience:
-                  </strong>{" "}
-                  {
-                    item.candidate
-                      .experience
-                  }{" "}
-                  years
+                  <strong>Experience:</strong>{" "}
+                  {item.candidate.experience} years
                 </p>
 
                 <p>
-                  <strong>
-                    Status:
-                  </strong>{" "}
-
-                  <span
-                    className={`status-badge ${
-                      item.candidate
-                        .status ===
-                      "hire"
-                        ? "status-hire"
-                        : item
-                            .candidate
-                            .status ===
-                          "shortlist"
-                        ? "status-shortlist"
-                        : item
-                            .candidate
-                            .status ===
-                          "reject"
-                        ? "status-reject"
-                        : "status-pending"
-                    }`}
-                  >
-                    {item.candidate
-                      .status ||
-                      "pending"}
+                  <strong>Status:</strong>{" "}
+                  <span className={`status-badge`}>
+                    {item.candidate.status || "pending"}
                   </span>
                 </p>
               </div>
 
-              {/* Skills */}
-              <div
-                style={{
-                  marginTop: "20px",
-                }}
-              >
-                <strong>
-                  Skills
-                </strong>
+              {/* SKILLS */}
+              <div style={{ marginTop: "20px" }}>
+                <strong>Skills</strong>
 
                 <div
                   style={{
-                    display:
-                      "flex",
-
-                    flexWrap:
-                      "wrap",
-
+                    display: "flex",
+                    flexWrap: "wrap",
                     gap: "10px",
-
-                    marginTop:
-                      "12px",
+                    marginTop: "12px",
                   }}
                 >
-                  {item.candidate.skills?.map(
-                    (
-                      skill,
-                      index
-                    ) => (
-                      <span
-                        key={index}
-                        className="skill-badge"
-                      >
-                        {skill}
-                      </span>
-                    )
-                  )}
+                  {item.candidate.skills?.map((skill, i) => (
+                    <span key={i} className="skill-badge">
+                      {skill}
+                    </span>
+                  ))}
                 </div>
               </div>
 
-              {/* Score */}
-              <div
-                style={{
-                  marginTop: "30px",
-                }}
-              >
+              {/* SCORE */}
+              <div style={{ marginTop: "30px" }}>
                 <div
                   style={{
-                    display:
-                      "flex",
-
-                    justifyContent:
-                      "space-between",
-
-                    marginBottom:
-                      "10px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: "10px",
                   }}
                 >
-                  <strong>
-                    Match Score
-                  </strong>
-
-                  <strong>
-                    {item.score}
-                    /100
-                  </strong>
+                  <strong>Match Score</strong>
+                  <strong>{item.score}/100</strong>
                 </div>
 
                 <div
                   style={{
                     height: "18px",
-
-                    background:
-                      "rgba(255,255,255,0.12)",
-
-                    borderRadius:
-                      "20px",
-
-                    overflow:
-                      "hidden",
+                    background: "rgba(255,255,255,0.12)",
+                    borderRadius: "20px",
+                    overflow: "hidden",
                   }}
                 >
                   <div
                     style={{
-                      width: `${Math.min(
-                        item.score,
-                        100
-                      )}%`,
-
-                      height:
-                        "100%",
-
-                      background:
-                        getScoreColor(
-                          item.score
-                        ),
-
-                      transition:
-                        "0.5s",
+                      width: `${Math.min(item.score, 100)}%`,
+                      height: "100%",
+                      background: getScoreColor(item.score),
+                      transition: "0.5s",
                     }}
                   />
                 </div>
               </div>
 
-              {/* Reasons */}
-              <div
-                style={{
-                  marginTop: "25px",
-                }}
-              >
-                <h4>
-                  Why this
-                  candidate
-                  matches
-                </h4>
+              {/* REASONS */}
+              <div style={{ marginTop: "25px" }}>
+                <h4>Why this candidate matches</h4>
 
-                <ul
-                  style={{
-                    marginTop:
-                      "12px",
-
-                    paddingLeft:
-                      "20px",
-
-                    lineHeight:
-                      "2",
-                  }}
-                >
-                  {(
-                    item.reasons ||
-                    []
-                  ).map(
-                    (
-                      reason,
-                      i
-                    ) => (
-                      <li
-                        key={i}
-                      >
-                        ✅{" "}
-                        {
-                          reason
-                        }
-                      </li>
-                    )
-                  )}
+                <ul style={{ marginTop: "12px", lineHeight: "2" }}>
+                  {(item.reasons || []).map((reason, i) => (
+                    <li key={i}>✅ {reason}</li>
+                  ))}
                 </ul>
               </div>
 
-              {/* Actions */}
+              {/* ACTIONS */}
               <div
                 style={{
                   marginTop: "30px",
-
-                  display:
-                    "flex",
-
-                  flexWrap:
-                    "wrap",
-
+                  display: "flex",
+                  flexWrap: "wrap",
                   gap: "15px",
                 }}
               >
                 <button
                   onClick={() =>
-                    handleAction(
-                      item
-                        .candidate
-                        ._id,
-                      "hire"
-                    )
+                    handleAction(item.candidate._id, "hire")
                   }
-                  style={{
-                    padding:
-                      "12px 24px",
-
-                    border:
-                      "none",
-
-                    borderRadius:
-                      "30px",
-
-                    background:
-                      "#22c55e",
-
-                    color:
-                      "white",
-
-                    cursor:
-                      "pointer",
-
-                    fontWeight:
-                      "700",
-                  }}
+                  style={btn("#22c55e")}
                 >
                   Hire
                 </button>
 
                 <button
                   onClick={() =>
-                    handleAction(
-                      item
-                        .candidate
-                        ._id,
-                      "shortlist"
-                    )
+                    handleAction(item.candidate._id, "shortlist")
                   }
-                  style={{
-                    padding:
-                      "12px 24px",
-
-                    border:
-                      "none",
-
-                    borderRadius:
-                      "30px",
-
-                    background:
-                      "#3b82f6",
-
-                    color:
-                      "white",
-
-                    cursor:
-                      "pointer",
-
-                    fontWeight:
-                      "700",
-                  }}
+                  style={btn("#3b82f6")}
                 >
                   Shortlist
                 </button>
 
                 <button
                   onClick={() =>
-                    handleAction(
-                      item
-                        .candidate
-                        ._id,
-                      "reject"
-                    )
+                    handleAction(item.candidate._id, "reject")
                   }
-                  style={{
-                    padding:
-                      "12px 24px",
-
-                    border:
-                      "none",
-
-                    borderRadius:
-                      "30px",
-
-                    background:
-                      "#ef4444",
-
-                    color:
-                      "white",
-
-                    cursor:
-                      "pointer",
-
-                    fontWeight:
-                      "700",
-                  }}
+                  style={btn("#ef4444")}
                 >
                   Reject
                 </button>
@@ -519,5 +280,16 @@ function Rankings() {
     </div>
   );
 }
+
+// reusable button style
+const btn = (bg) => ({
+  padding: "12px 24px",
+  border: "none",
+  borderRadius: "30px",
+  background: bg,
+  color: "white",
+  cursor: "pointer",
+  fontWeight: "700",
+});
 
 export default Rankings;

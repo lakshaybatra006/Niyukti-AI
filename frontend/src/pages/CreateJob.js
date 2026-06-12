@@ -14,6 +14,9 @@ function CreateJob() {
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(true);
 
+  // ✅ BASE URL FROM ENV
+  const API = process.env.REACT_APP_API_URL;
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -38,20 +41,13 @@ function CreateJob() {
           .map((s) => s.trim())
           .filter((s) => s),
 
-        experienceRange:
-          formData.experienceRange,
+        experienceRange: formData.experienceRange,
       };
 
-      await axios.post(
-        "http://localhost:5000/api/jobs",
-        payload
-      );
+      await axios.post(`${API}/api/jobs`, payload);
 
       setSuccess(true);
-
-      setMessage(
-        "✅ Job Created Successfully"
-      );
+      setMessage("✅ Job Created Successfully");
 
       setFormData({
         title: "",
@@ -62,12 +58,8 @@ function CreateJob() {
       });
     } catch (error) {
       console.error(error);
-
       setSuccess(false);
-
-      setMessage(
-        "❌ Failed to create job"
-      );
+      setMessage("❌ Failed to create job");
     }
   };
 
@@ -80,14 +72,10 @@ function CreateJob() {
           margin: "0 auto",
         }}
       >
-        <h1 className="ai-title">
-          💼 Create New Job
-        </h1>
+        <h1 className="ai-title">💼 Create New Job</h1>
 
         <p className="ai-subtitle">
-          Define hiring requirements and
-          let AI find the perfect
-          candidates.
+          Define hiring requirements and let AI find the perfect candidates.
         </p>
 
         <form onSubmit={handleSubmit}>
@@ -140,10 +128,7 @@ function CreateJob() {
             className="ai-input"
           />
 
-          <button
-            type="submit"
-            className="ai-button"
-          >
+          <button type="submit" className="ai-button">
             🚀 Create Job
           </button>
         </form>
@@ -151,9 +136,7 @@ function CreateJob() {
         {message && (
           <div
             className={`analysis-box ${
-              success
-                ? "fraud-safe"
-                : "fraud-risk"
+              success ? "fraud-safe" : "fraud-risk"
             }`}
           >
             <h3>{message}</h3>

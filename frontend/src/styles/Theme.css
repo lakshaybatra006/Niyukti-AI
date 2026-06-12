@@ -1,372 +1,159 @@
 /* =========================
    GLOBAL RESET
 ========================= */
-
 html,
 body,
 #root {
   margin: 0;
   padding: 0;
+  width: 100%;
   min-height: 100%;
+  overflow-x: hidden;
 }
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-family: "Segoe UI", sans-serif;
 }
 
 /* =========================
-   AI PAGE BACKGROUND
+   BODY BACKGROUND
 ========================= */
-
-.ai-page {
-  min-height: 100vh;
-  padding: 50px 8%;
-  color: white;
-  position: relative;
-  overflow: hidden;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(0, 255, 255, 0.15),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at bottom left,
-      rgba(0, 102, 255, 0.15),
-      transparent 35%
-    ),
-    linear-gradient(
-      135deg,
-      #001c82 0%,
-      #002db4 50%,
-      #00134d 100%
-    );
+body {
+  background: #f4f7fc;
 }
 
 /* =========================
-   ANIMATED PARTICLES
+   NAVBAR
 ========================= */
-
-.ai-page::before {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-
-  background-image:
-    radial-gradient(
-      circle,
-      rgba(0, 255, 255, 0.6) 2px,
-      transparent 2px
-    );
-
-  background-size: 120px 120px;
-
-  animation: particles 12s linear infinite;
-
-  opacity: 0.4;
-
-  pointer-events: none;
-}
-
-@keyframes particles {
-  from {
-    transform: translateY(0);
-  }
-
-  to {
-    transform: translateY(-120px);
-  }
-}
-
-/* =========================
-   PAGE HEADER
-========================= */
-
-.ai-title {
-  font-size: 44px;
-  font-weight: 800;
-  margin-bottom: 10px;
-}
-
-.ai-subtitle {
-  color: #dbeafe;
-  margin-bottom: 35px;
-  font-size: 18px;
-}
-
-/* =========================
-   GLASS CONTAINERS
-========================= */
-
-.ai-container {
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.08),
-      rgba(255, 255, 255, 0.04)
-    );
-
-  backdrop-filter: blur(20px);
-
-  border: 1px solid
-    rgba(255, 255, 255, 0.15);
-
-  border-radius: 25px;
-
-  padding: 30px;
-
-  box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.25);
-
-  transition: 0.3s;
-}
-
-.ai-container:hover {
-  transform: translateY(-5px);
-
-  box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-/* =========================
-   INPUTS
-========================= */
-
-.ai-input,
-.ai-textarea {
+.navbar {
+  background: linear-gradient(90deg, #0f172a, #1e3a8a);
+  padding: 18px 40px;
+  display: flex;
+  align-items: center;
+  gap: 25px;
   width: 100%;
+  flex-wrap: wrap;
+}
 
-  padding: 15px;
-
-  margin-bottom: 18px;
-
-  border-radius: 14px;
-
-  border: 1px solid
-    rgba(255, 255, 255, 0.15);
-
-  background:
-    rgba(255, 255, 255, 0.08);
-
+.logo {
   color: white;
-
-  font-size: 15px;
-
-  outline: none;
-
-  transition: 0.3s;
-}
-
-.ai-input:focus,
-.ai-textarea:focus {
-  border-color: #41ddd2;
-
-  box-shadow:
-    0 0 15px rgba(65, 221, 210, 0.25);
-}
-
-.ai-input::placeholder,
-.ai-textarea::placeholder {
-  color: rgba(255, 255, 255, 0.65);
-}
-
-/* =========================
-   BUTTONS
-========================= */
-
-.ai-button {
-  width: 100%;
-
-  padding: 15px;
-
-  border: none;
-
-  border-radius: 50px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #41ddd2,
-      #00b7ff
-    );
-
-  color: #00285f;
-
-  font-size: 16px;
+  font-size: 28px;
   font-weight: 700;
-
-  cursor: pointer;
-
-  transition: all 0.3s ease;
+  margin-right: 20px;
 }
 
-.ai-button:hover {
-  transform: translateY(-4px);
-
-  box-shadow:
-    0 10px 30px
-    rgba(65, 221, 210, 0.35);
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
 }
 
-.ai-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.nav-link:hover {
+  color: #60a5fa;
 }
 
 /* =========================
-   SKILL BADGES
+   DASHBOARD WRAPPER
 ========================= */
+.dashboard {
+  padding: 40px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
 
-.skill-badge {
-  padding: 8px 14px;
+/* TITLE */
+.dashboard-title {
+  font-size: 40px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 30px;
+  text-align: center;
+}
 
+/* =========================
+   CARD CONTAINER (FIXED)
+========================= */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  width: 100%;
+  padding: 10px;
+}
+
+/* =========================
+   DASHBOARD CARD (FIXED OVERFLOW)
+========================= */
+.dashboard-card {
+  background: white;
+  width: 100%;
+  min-height: 160px;
   border-radius: 20px;
+  text-decoration: none;
+  color: #111827;
 
-  background:
-    rgba(65, 221, 210, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  border: 1px solid
-    rgba(65, 221, 210, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
 
-  color: #9ffcff;
+  padding: 20px;
+  text-align: center;
+}
 
-  font-size: 14px;
+.dashboard-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
 
+/* ICON */
+.card-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+/* TITLE */
+.card-title {
+  font-size: 18px;
   font-weight: 600;
 }
 
 /* =========================
-   STATUS BADGES
+   RESPONSIVE FIX
 ========================= */
-
-.status-badge {
-  display: inline-block;
-
-  padding: 8px 15px;
-
-  border-radius: 20px;
-
-  font-weight: 700;
-
-  text-transform: capitalize;
-}
-
-.status-hire {
-  background: rgba(34, 197, 94, 0.2);
-  color: #86efac;
-}
-
-.status-shortlist {
-  background: rgba(59, 130, 246, 0.2);
-  color: #93c5fd;
-}
-
-.status-reject {
-  background: rgba(239, 68, 68, 0.2);
-  color: #fca5a5;
-}
-
-.status-pending {
-  background: rgba(255,255,255,0.12);
-  color: #e5e7eb;
-}
-
-/* =========================
-   FILE UPLOAD BOX
-========================= */
-
-.upload-box {
-  border: 2px dashed
-    rgba(65, 221, 210, 0.5);
-
-  padding: 35px;
-
-  border-radius: 18px;
-
-  text-align: center;
-
-  margin-bottom: 25px;
-
-  background:
-    rgba(255, 255, 255, 0.04);
-}
-
-/* =========================
-   RESULT BOXES
-========================= */
-
-.success-box {
-  background:
-    rgba(34, 197, 94, 0.12);
-
-  border: 1px solid
-    rgba(34, 197, 94, 0.25);
-
-  border-radius: 20px;
-
-  padding: 25px;
-
-  margin-top: 25px;
-}
-
-.fraud-safe {
-  background:
-    rgba(34, 197, 94, 0.12);
-
-  border: 1px solid
-    rgba(34, 197, 94, 0.3);
-}
-
-.fraud-risk {
-  background:
-    rgba(239, 68, 68, 0.12);
-
-  border: 1px solid
-    rgba(239, 68, 68, 0.3);
-}
-
-.analysis-box {
-  padding: 25px;
-
-  border-radius: 20px;
-
-  margin-top: 25px;
-}
-
-/* =========================
-   GRID LAYOUT
-========================= */
-
-.ai-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(auto-fit, minmax(320px, 1fr));
-
-  gap: 25px;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
 @media (max-width: 768px) {
-  .ai-page {
-    padding: 30px 6%;
+  .dashboard-title {
+    font-size: 30px;
   }
 
-  .ai-title {
-    font-size: 34px;
+  .navbar {
+    padding: 15px 20px;
+    gap: 15px;
   }
 
-  .ai-subtitle {
-    font-size: 16px;
+  .card-container {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
   }
 
-  .ai-container {
-    padding: 22px;
+  .dashboard-card {
+    min-height: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-title {
+    font-size: 24px;
+  }
+
+  .card-container {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

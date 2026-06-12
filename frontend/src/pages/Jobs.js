@@ -9,9 +9,12 @@ function Jobs() {
 
   const navigate = useNavigate();
 
+  // ✅ BASE URL FROM ENV
+  const API = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/jobs")
+      .get(`${API}/api/jobs`)
       .then((res) => {
         setJobs(res.data);
         setLoading(false);
@@ -20,7 +23,7 @@ function Jobs() {
         console.log(err);
         setLoading(false);
       });
-  }, []);
+  }, [API]);
 
   if (loading) {
     return (
@@ -41,43 +44,25 @@ function Jobs() {
 
   return (
     <div className="ai-page">
-      <div
-        style={{
-          maxWidth: "1400px",
-          margin: "0 auto",
-        }}
-      >
-        <h1 className="ai-title">
-          💼 Available Jobs
-        </h1>
+      <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+        <h1 className="ai-title">💼 Available Jobs</h1>
 
         <p className="ai-subtitle">
-          Explore opportunities and use
-          AI to identify the best
-          candidates for every role.
+          Explore opportunities and use AI to identify the best candidates.
         </p>
 
         {jobs.length === 0 ? (
           <div className="ai-container">
             <h2>No Jobs Found</h2>
 
-            <p
-              style={{
-                color: "#dbeafe",
-                marginTop: "10px",
-              }}
-            >
-              Create your first job
-              posting to begin recruiting.
+            <p style={{ color: "#dbeafe", marginTop: "10px" }}>
+              Create your first job posting to begin recruiting.
             </p>
           </div>
         ) : (
           <div className="ai-grid">
             {jobs.map((job) => (
-              <div
-                key={job._id}
-                className="ai-container"
-              >
+              <div key={job._id} className="ai-container">
                 <h2
                   style={{
                     color: "#9ffcff",
@@ -97,15 +82,9 @@ function Jobs() {
                   {job.description}
                 </p>
 
-                {/* Required Skills */}
-                <div
-                  style={{
-                    marginBottom: "20px",
-                  }}
-                >
-                  <strong>
-                    Required Skills
-                  </strong>
+                {/* REQUIRED SKILLS */}
+                <div style={{ marginBottom: "20px" }}>
+                  <strong>Required Skills</strong>
 
                   <div
                     style={{
@@ -115,28 +94,17 @@ function Jobs() {
                       marginTop: "12px",
                     }}
                   >
-                    {job.requiredSkills?.map(
-                      (skill, index) => (
-                        <span
-                          key={index}
-                          className="skill-badge"
-                        >
-                          {skill}
-                        </span>
-                      )
-                    )}
+                    {job.requiredSkills?.map((skill, index) => (
+                      <span key={index} className="skill-badge">
+                        {skill}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
-                {/* Preferred Skills */}
-                <div
-                  style={{
-                    marginBottom: "20px",
-                  }}
-                >
-                  <strong>
-                    Preferred Skills
-                  </strong>
+                {/* PREFERRED SKILLS */}
+                <div style={{ marginBottom: "20px" }}>
+                  <strong>Preferred Skills</strong>
 
                   <div
                     style={{
@@ -146,35 +114,22 @@ function Jobs() {
                       marginTop: "12px",
                     }}
                   >
-                    {job.preferredSkills?.map(
-                      (skill, index) => (
-                        <span
-                          key={index}
-                          className="skill-badge"
-                        >
-                          {skill}
-                        </span>
-                      )
-                    )}
+                    {job.preferredSkills?.map((skill, index) => (
+                      <span key={index} className="skill-badge">
+                        {skill}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
-                <p
-                  style={{
-                    marginBottom: "10px",
-                  }}
-                >
-                  <strong>
-                    Experience:
-                  </strong>{" "}
-                  {job.experienceRange}
+                <p style={{ marginBottom: "10px" }}>
+                  <strong>Experience:</strong> {job.experienceRange}
                 </p>
 
                 <p
                   style={{
                     fontSize: "12px",
-                    color:
-                      "rgba(255,255,255,0.6)",
+                    color: "rgba(255,255,255,0.6)",
                     marginBottom: "25px",
                   }}
                 >
@@ -183,11 +138,7 @@ function Jobs() {
 
                 <button
                   className="ai-button"
-                  onClick={() =>
-                    navigate(
-                      `/rankings/${job._id}`
-                    )
-                  }
+                  onClick={() => navigate(`/rankings/${job._id}`)}
                 >
                   🏆 View Rankings
                 </button>
