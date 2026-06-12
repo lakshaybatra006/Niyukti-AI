@@ -185,6 +185,7 @@ body,
   box-shadow: 0 12px 25px rgba(37,99,235,0.4);
 }
 
+
 .ai-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
