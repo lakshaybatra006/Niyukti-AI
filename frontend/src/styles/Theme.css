@@ -21,28 +21,14 @@ body,
 
 .ai-page {
   min-height: 100vh;
-  padding: 50px 8%;
+  padding: 40px 20px;
+  background: linear-gradient(
+    135deg,
+    #0f172a 0%,
+    #1e3a8a 50%,
+    #0f172a 100%
+  );
   color: white;
-  position: relative;
-  overflow: hidden;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(0, 255, 255, 0.15),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at bottom left,
-      rgba(0, 102, 255, 0.15),
-      transparent 35%
-    ),
-    linear-gradient(
-      135deg,
-      #001c82 0%,
-      #002db4 50%,
-      #00134d 100%
-    );
 }
 
 /* =========================
@@ -179,36 +165,24 @@ body,
 
 .ai-button {
   width: 100%;
-
-  padding: 15px;
-
+  padding: 16px;
   border: none;
-
-  border-radius: 50px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #41ddd2,
-      #00b7ff
-    );
-
-  color: #00285f;
-
-  font-size: 16px;
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    #41ddd2,
+    #2563eb
+  );
+  color: white;
   font-weight: 700;
-
+  font-size: 16px;
   cursor: pointer;
-
-  transition: all 0.3s ease;
+  transition: 0.3s;
 }
 
 .ai-button:hover {
-  transform: translateY(-4px);
-
-  box-shadow:
-    0 10px 30px
-    rgba(65, 221, 210, 0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(37,99,235,0.4);
 }
 
 .ai-button:disabled {
@@ -253,7 +227,7 @@ body,
 
   text-transform: capitalize;
 }
-
+ai-bu
 .status-hire {
   background: rgba(34, 197, 94, 0.2);
   color: #86efac;
@@ -279,21 +253,39 @@ body,
 ========================= */
 
 .upload-box {
-  border: 2px dashed
-    rgba(65, 221, 210, 0.5);
-
-  padding: 35px;
-
-  border-radius: 18px;
-
+  margin: 30px 0;
+  padding: 50px 30px;
+  border: 2px dashed rgba(65, 221, 210, 0.5);
+  border-radius: 24px;
   text-align: center;
-
-  margin-bottom: 25px;
-
-  background:
-    rgba(255, 255, 255, 0.04);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(15px);
+}
+.upload-box input[type="file"] {
+  color: #dbeafe;
+  font-size: 15px;
 }
 
+.upload-box input[type="file"]::file-selector-button {
+  padding: 12px 22px;
+  margin-right: 15px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    #41ddd2,
+    #2563eb
+  );
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.upload-box input[type="file"]::file-selector-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37,99,235,0.35);
+}
 /* =========================
    RESULT BOXES
 ========================= */
@@ -367,6 +359,11 @@ body,
   }
 
   .ai-container {
-    padding: 22px;
-  }
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 28px;
+  padding: 40px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
 }
