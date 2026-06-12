@@ -13,7 +13,7 @@ function Dashboard() {
         {/* Left Side */}
         <div className="hero-left">
           <p className="hero-tag">
-            MEET AI RECRUITER
+            MEET NIYUKTI AI
           </p>
 
           <h1 className="hero-title">

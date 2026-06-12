@@ -4,8 +4,7 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="logo">
-        🤖 AI Recruiter
-      </div>
+         Niyukti AI      </div>
 
       <Link className="nav-link" to="/">
         Dashboard
