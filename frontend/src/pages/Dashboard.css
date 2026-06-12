@@ -1,0 +1,744 @@
+.dashboard-bg {
+  min-height: 100vh;
+  padding: 50px 8%;
+  overflow: hidden;
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(0, 255, 255, 0.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(0, 102, 255, 0.18),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #000d38 0%,
+      #001f7a 45%,
+      #00091f 100%
+    );
+
+  color: white;
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+.particles::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    radial-gradient(
+      circle,
+      rgba(0,255,255,0.75) 2px,
+      transparent 2px
+    );
+
+  background-size: 120px 120px;
+
+  animation: stars 12s linear infinite;
+
+  opacity: 0.4;
+
+  pointer-events: none;
+}
+
+@keyframes stars {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-120px);
+  }
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  min-height: 85vh;
+
+  gap: 70px;
+}
+
+.hero-left {
+  flex: 1;
+  z-index: 10;
+}
+
+.hero-tag {
+  color: #72ecff;
+
+  letter-spacing: 5px;
+
+  font-size: 14px;
+
+  font-weight: 700;
+}
+
+.hero-title {
+  font-size: 68px;
+
+  font-weight: 800;
+
+  line-height: 1.1;
+
+  margin: 20px 0;
+
+  text-shadow:
+    0 0 25px rgba(0,255,255,0.15);
+}
+
+.hero-subtitle {
+  color: #d4e9ff;
+
+  font-size: 20px;
+
+  line-height: 1.8;
+
+  max-width: 620px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.hero-buttons {
+  display: flex;
+
+  gap: 20px;
+
+  margin-top: 40px;
+}
+
+.hero-btn {
+  padding: 16px 34px;
+
+  border-radius: 50px;
+
+  text-decoration: none;
+
+  font-weight: 700;
+
+  transition: 0.3s;
+}
+
+.hero-btn.primary {
+  background: linear-gradient(
+    90deg,
+    #48fff4,
+    #00bfff
+  );
+
+  color: #00224f;
+}
+
+.hero-btn.secondary {
+  border: 2px solid
+    rgba(255,255,255,0.4);
+
+  color: white;
+}
+
+.hero-btn:hover {
+  transform: translateY(-6px);
+
+  box-shadow:
+    0 10px 30px rgba(0,255,255,0.25);
+}
+
+/* =========================
+   ROBOT SECTION
+========================= */
+
+.hero-right {
+  flex: 1;
+
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 720px;
+
+  overflow: visible;
+}
+
+/* Main glow */
+
+.hero-right::before {
+  content: "";
+
+  position: absolute;
+
+  width: 520px;
+  height: 520px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(0,255,255,0.25),
+      transparent 70%
+    );
+
+  filter: blur(20px);
+
+  z-index: 1;
+}
+
+/* Outer pulse ring */
+
+.hero-right::after {
+  content: "";
+
+  position: absolute;
+
+  width: 560px;
+  height: 560px;
+
+  border-radius: 50%;
+
+  border:
+    2px solid rgba(0,255,255,0.18);
+
+  animation:
+    pulse 4s ease infinite;
+
+  z-index: 2;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+.robot-image {
+  width: 700px;
+
+  max-width: 100%;
+
+  object-fit: contain;
+
+  z-index: 10;
+
+  animation:
+    float 5s ease-in-out infinite;
+
+  filter:
+    drop-shadow(
+      0 0 30px rgba(0,255,255,0.4)
+    )
+    drop-shadow(
+      0 0 60px rgba(0,102,255,0.25)
+    );
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+/* =========================
+   FEATURE TAGS
+========================= */
+
+.feature-tag {
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 14px 22px;
+
+  background:
+    rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(16px);
+
+  border:
+    1px solid rgba(0,255,255,0.18);
+
+  border-radius: 999px;
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  box-shadow:
+    0 0 20px rgba(0,255,255,0.08);
+
+  z-index: 20;
+
+  transition: 0.3s;
+}
+
+.feature-tag:hover {
+  transform:
+    translateY(-6px)
+    scale(1.03);
+
+  box-shadow:
+    0 0 30px rgba(0,255,255,0.18);
+}
+
+.feature-tag span {
+  font-size: 18px;
+}
+
+/* Connector Lines */
+
+.feature-tag::after {
+  content: "";
+
+  position: absolute;
+
+  width: 55px;
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0,255,255,0.7),
+      transparent
+    );
+}
+
+/* Positions (moved away from robot) */
+
+.top-left {
+  top: 6%;
+  left: -15%;
+}
+
+.top-left::after {
+  right: -55px;
+  top: 50%;
+}
+
+.top-right {
+  top: 18%;
+  right: -16%;
+}
+
+.top-right::after {
+  left: -55px;
+  top: 50%;
+}
+
+.bottom-left {
+  bottom: 22%;
+  left: -15%;
+}
+
+.bottom-left::after {
+  right: -55px;
+  top: 50%;
+}
+
+.bottom-right {
+  bottom: 10%;
+  right: -16%;
+}
+
+.bottom-right::after {
+  left: -55px;
+  top: 50%;
+}
+/* =========================
+   DASHBOARD MODULES
+========================= */
+
+.dashboard-actions {
+  margin-top: 90px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(240px, 1fr));
+
+  gap: 28px;
+}
+
+/* =========================
+   FUTURISTIC CARDS
+========================= */
+
+.dashboard-card {
+  position: relative;
+
+  background: linear-gradient(
+    145deg,
+    rgba(0, 20, 70, 0.88),
+    rgba(0, 45, 110, 0.78)
+  );
+
+  backdrop-filter: blur(20px);
+
+  border: 1px solid
+    rgba(72, 255, 244, 0.15);
+
+  border-radius: 28px;
+
+  padding: 32px;
+
+  text-decoration: none;
+
+  color: white;
+
+  overflow: hidden;
+
+  transition: all 0.35s ease;
+
+  box-shadow:
+    0 12px 30px
+    rgba(0, 0, 0, 0.28);
+}
+
+/* Neon top strip */
+
+.dashboard-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 4px;
+
+  background: linear-gradient(
+    90deg,
+    #48fff4,
+    #00bfff,
+    #48fff4
+  );
+
+  opacity: 0.9;
+}
+
+/* Ambient glow */
+
+.dashboard-card::after {
+  content: "";
+
+  position: absolute;
+
+  top: -40%;
+  right: -20%;
+
+  width: 150px;
+  height: 150px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(72, 255, 244, 0.08);
+
+  filter: blur(45px);
+
+  pointer-events: none;
+}
+
+/* Hover */
+
+.dashboard-card:hover {
+  transform:
+    translateY(-12px)
+    scale(1.02);
+
+  border-color:
+    rgba(72, 255, 244, 0.4);
+
+  box-shadow:
+    0 22px 45px
+      rgba(0, 0, 0, 0.35),
+    0 0 28px
+      rgba(72, 255, 244, 0.12);
+}
+
+/* =========================
+   ICONS
+========================= */
+
+.card-icon {
+  width: 78px;
+  height: 78px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 40px;
+
+  border-radius: 22px;
+
+  background:
+    rgba(72, 255, 244, 0.08);
+
+  border: 1px solid
+    rgba(72, 255, 244, 0.15);
+
+  box-shadow:
+    inset 0 0 15px
+      rgba(72, 255, 244, 0.08);
+
+  margin-bottom: 20px;
+}
+
+/* =========================
+   TEXT
+========================= */
+
+.card-title {
+  font-size: 24px;
+
+  font-weight: 700;
+
+  color: white;
+
+  margin-bottom: 12px;
+}
+
+.card-desc {
+  color: #c9dcff;
+
+  line-height: 1.7;
+
+  font-size: 15px;
+}
+
+/* =========================
+   DIFFERENT CARD ACCENTS
+========================= */
+
+/* Upload Resume */
+
+.dashboard-card:nth-child(1) {
+  border-color:
+    rgba(72, 255, 244, 0.18);
+}
+
+/* Create Job */
+
+.dashboard-card:nth-child(2) {
+  border-color:
+    rgba(91, 163, 255, 0.20);
+}
+
+/* View Jobs */
+
+.dashboard-card:nth-child(3) {
+  border-color:
+    rgba(154, 117, 255, 0.20);
+}
+
+/* Interview */
+
+.dashboard-card:nth-child(4) {
+  border-color:
+    rgba(255, 135, 225, 0.18);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+  .hero-title {
+    font-size: 56px;
+  }
+
+  .robot-image {
+    width: 580px;
+  }
+
+  .feature-tag {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 992px) {
+  .hero-section {
+    flex-direction: column;
+
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 42px;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .robot-image {
+    width: 420px;
+  }
+
+  .feature-tag {
+    display: none;
+  }
+
+  .dashboard-actions {
+    margin-top: 60px;
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-bg {
+    padding: 40px 6%;
+  }
+
+  .hero-title {
+    font-size: 34px;
+  }
+
+  .hero-subtitle {
+    font-size: 17px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .robot-image {
+    width: 300px;
+  }
+
+  .dashboard-card {
+    padding: 25px;
+  }
+
+  .card-icon {
+    width: 65px;
+    height: 65px;
+
+    font-size: 32px;
+  }
+
+  .card-title {
+    font-size: 21px;
+  }
+}
+/* =========================
+   MOBILE RESPONSIVE FIX (FINAL)
+========================= */
+
+@media (max-width: 1024px) {
+
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .hero-title {
+    font-size: 42px;
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    max-width: 100%;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-right {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 768px) {
+
+  .dashboard-bg {
+    padding: 30px 20px;
+  }
+
+  .hero-title {
+    font-size: 32px;
+  }
+
+  .hero-subtitle {
+    font-size: 15px;
+  }
+
+  /* Robot scaling */
+  .robot-image {
+    width: 300px !important;
+  }
+
+  /* Feature tags OFF on mobile */
+  .feature-tag {
+    display: none;
+  }
+
+  /* Cards become full width */
+  .dashboard-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .hero-title {
+    font-size: 26px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .robot-image {
+    width: 240px !important;
+  }
+}

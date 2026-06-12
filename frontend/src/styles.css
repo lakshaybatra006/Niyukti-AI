@@ -1,0 +1,232 @@
+/* =========================
+   GLOBAL RESET
+========================= */
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0b1220;
+  color: white;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* =========================
+   NAVBAR (MODERN)
+========================= */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #38bdf8;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  transition: 0.3s;
+}
+
+.nav-link:hover {
+  color: #38bdf8;
+}
+
+/* =========================
+   DASHBOARD BG
+========================= */
+
+.dashboard-bg {
+  min-height: 100vh;
+  padding: 40px;
+  background: radial-gradient(circle at top, #1e3a8a, #0b1220);
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+  margin-top: 40px;
+}
+
+.hero-left {
+  flex: 1;
+}
+
+.hero-tag {
+  color: #38bdf8;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.hero-title {
+  font-size: 52px;
+  font-weight: 800;
+  margin: 20px 0;
+}
+
+.hero-subtitle {
+  color: #cbd5e1;
+  font-size: 18px;
+  max-width: 600px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.hero-btn {
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.primary {
+  background: #38bdf8;
+  color: black;
+}
+
+.secondary {
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
+}
+
+/* =========================
+   ROBOT SECTION
+========================= */
+
+.hero-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.robot-image {
+  width: 420px;
+  max-width: 100%;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* FLOATING TAGS */
+.feature-tag {
+  position: absolute;
+  background: rgba(255,255,255,0.08);
+  padding: 10px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* =========================
+   DASHBOARD CARDS
+========================= */
+
+.dashboard-actions {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.dashboard-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 25px;
+  border-radius: 18px;
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-8px);
+  border-color: #38bdf8;
+}
+
+/* =========================
+   FORMS (UPLOAD / JOB)
+========================= */
+
+.form-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 36px;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .robot-image {
+    width: 280px;
+  }
+}
+
+@media (max-width: 500px) {
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .dashboard-bg {
+    padding: 20px;
+  }
+}
