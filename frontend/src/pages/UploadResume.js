@@ -8,6 +8,9 @@ export default function UploadResume() {
   const [candidate, setCandidate] = useState(null);
   const [fraud, setFraud] = useState(null);
 
+  // ✅ BASE URL FROM ENV
+  const API = process.env.REACT_APP_API_URL;
+console.log("API URL:", API);
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -25,7 +28,7 @@ export default function UploadResume() {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:5000/api/resume/upload",
+        `${API}/api/resume/upload`,
         formData,
         {
           headers: {
@@ -65,8 +68,7 @@ export default function UploadResume() {
         </h1>
 
         <p className="ai-subtitle">
-          Upload candidate resumes and let
-          AI analyse them automatically.
+          Upload candidate resumes and let AI analyse them automatically.
         </p>
 
         {/* Upload Box */}
@@ -96,43 +98,28 @@ export default function UploadResume() {
           disabled={!file || loading}
           className="ai-button"
         >
-          {loading
-            ? "Uploading..."
-            : "🚀 Upload Resume"}
+          {loading ? "Uploading..." : "🚀 Upload Resume"}
         </button>
 
-        {/* Candidate */}
+        {/* Candidate Result */}
         {candidate && (
           <div className="success-box">
-            <h2>
-              ✅ Candidate Details
-            </h2>
+            <h2>✅ Candidate Details</h2>
 
             <p>
-              <strong>Name:</strong>{" "}
-              {candidate.name}
+              <strong>Name:</strong> {candidate.name}
             </p>
 
             <p>
-              <strong>Email:</strong>{" "}
-              {candidate.email}
+              <strong>Email:</strong> {candidate.email}
             </p>
 
             <p>
-              <strong>
-                Experience:
-              </strong>{" "}
+              <strong>Experience:</strong>{" "}
               {candidate.experience} years
             </p>
 
-            <h4
-              style={{
-                marginTop: "20px",
-                marginBottom: "10px",
-              }}
-            >
-              Skills
-            </h4>
+            <h4 style={{ marginTop: "20px" }}>Skills</h4>
 
             <div
               style={{
@@ -141,16 +128,11 @@ export default function UploadResume() {
                 gap: "10px",
               }}
             >
-              {candidate.skills?.map(
-                (skill, index) => (
-                  <span
-                    key={index}
-                    className="skill-badge"
-                  >
-                    {skill}
-                  </span>
-                )
-              )}
+              {candidate.skills?.map((skill, index) => (
+                <span key={index} className="skill-badge">
+                  {skill}
+                </span>
+              ))}
             </div>
           </div>
         )}
@@ -164,29 +146,20 @@ export default function UploadResume() {
                 : "fraud-safe"
             }`}
           >
-            <h2>
-              🤖 AI Fraud Analysis
-            </h2>
+            <h2>🤖 AI Fraud Analysis</h2>
 
             <p>
-              <strong>
-                Fraud Score:
-              </strong>{" "}
+              <strong>Fraud Score:</strong>{" "}
               {fraud.score.toFixed(2)}
             </p>
 
-            <h4
-              style={{
-                marginTop: "20px",
-              }}
-            >
+            <h4 style={{ marginTop: "20px" }}>
               Explanation
             </h4>
 
             <pre
               style={{
-                whiteSpace:
-                  "pre-wrap",
+                whiteSpace: "pre-wrap",
                 color: "white",
                 marginTop: "10px",
               }}
