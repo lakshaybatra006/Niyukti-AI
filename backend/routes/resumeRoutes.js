@@ -189,7 +189,7 @@ if (experienceSection) {
         ).length,
     };
 console.log("EXTRACTED EXPERIENCE:", experience);
-console.log("EXPERIENCE TEXT:", experienceText);
+
     /* =========================
        FRAUD SCORE
     ========================= */
