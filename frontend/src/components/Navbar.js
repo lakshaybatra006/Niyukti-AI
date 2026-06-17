@@ -1,28 +1,18 @@
 import { Link } from "react-router-dom";
-
+import "./Dashboard.css";
+import
 function Navbar() {
   return (
     <div className="navbar">
       <div className="logo">
-         Niyukti AI      </div>
+  <span className="logo-icon">🚀</span>
+  <span className="logo-text">Niyukti AI</span>
+</div>
 
       <Link className="nav-link" to="/">
-        Dashboard
+        Home
       </Link>
 
-      <Link className="nav-link" to="/upload">
-        Upload Resume
-      </Link>
-
-      <Link className="nav-link" to="/job">
-        Create Job
-      </Link>
-
-   
-
-      <Link className="nav-link" to="/jobs">
-        Jobs
-      </Link>
     </div>
   );
 }
