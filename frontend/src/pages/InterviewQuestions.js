@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import "../styles/Theme.css";
 function InterviewQuestions() {
   const [candidates, setCandidates] = useState([]);
   const [questions, setQuestions] = useState("");
   const [selectedCandidate, setSelectedCandidate] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // ✅ BASE URL FROM ENV
+  const API = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/interview/candidates")
+      .get(`${API}/api/interview/candidates`)
       .then((res) => {
         setCandidates(res.data);
+      })
+      .catch((err) => {
+        console.log("ERROR:", err);
       });
-  }, []);
+  }, [API]);
 
   const generateQuestions = async (candidateId) => {
     try {
@@ -21,7 +27,7 @@ function InterviewQuestions() {
       setSelectedCandidate(candidateId);
 
       const res = await axios.get(
-        `http://localhost:5000/api/interview/${candidateId}`
+        `${API}/api/interview/${candidateId}`
       );
 
       setQuestions(res.data.questions);
@@ -97,12 +103,19 @@ function InterviewQuestions() {
               {candidate.name}
             </h2>
 
-            <p style={{ color: "#d6e7ff", marginBottom: "25px" }}>
+            <p
+              style={{
+                color: "#d6e7ff",
+                marginBottom: "25px",
+              }}
+            >
               📧 {candidate.email}
             </p>
 
             <button
-              onClick={() => generateQuestions(candidate._id)}
+              onClick={() =>
+                generateQuestions(candidate._id)
+              }
               disabled={loading}
               style={{
                 width: "100%",
@@ -117,7 +130,8 @@ function InterviewQuestions() {
                 cursor: "pointer",
               }}
             >
-              {loading && selectedCandidate === candidate._id
+              {loading &&
+              selectedCandidate === candidate._id
                 ? "Generating..."
                 : "Generate Questions"}
             </button>
@@ -146,10 +160,10 @@ function InterviewQuestions() {
               .split("\n")
               .filter((q) => q.trim() !== "")
               .map((q, index) => {
+                const cleanQ = q.replace(/^\d+[\).\s-]*/, "");
+
                 const isHeading =
                   /technical|behavioral|hr|questions/i.test(q) &&
-                  !q.trim().startsWith("-") &&
-                  !q.trim().startsWith("•") &&
                   q.length < 40;
 
                 return isHeading ? (
@@ -164,10 +178,9 @@ function InterviewQuestions() {
                       borderRadius: "10px",
                       fontSize: "18px",
                       fontWeight: "700",
-                      color: "#ffffff",
                     }}
                   >
-                    {q.replace(/[:]/g, "").trim()}
+                    {cleanQ.replace(/[:]/g, "").trim()}
                   </div>
                 ) : (
                   <div
@@ -180,8 +193,7 @@ function InterviewQuestions() {
                       color: "#e5e7eb",
                     }}
                   >
-                    <strong>Q{index + 1}.</strong>{" "}
-                    {q.replace(/^\d+[\).\s-]*/, "")}
+                    <strong>Q{index + 1}.</strong> {cleanQ}
                   </div>
                 );
               })}
