@@ -145,6 +145,18 @@ function Dashboard() {
             Generate tailored questions
           </div>
         </Link>
+        <Link
+    to="/analytics"
+    className="dashboard-card"
+  >
+    <div className="card-icon">📊</div>
+    <div className="card-title">
+      Hiring Analytics
+    </div>
+    <div className="card-desc">
+      AI insights and hiring metrics
+    </div>
+  </Link>
       </section>
     </div>
   );
