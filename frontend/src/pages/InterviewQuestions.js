@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/theme.css";
+import "../styles/Theme.css";
 
 function InterviewQuestions() {
   const [candidates, setCandidates] = useState([]);
