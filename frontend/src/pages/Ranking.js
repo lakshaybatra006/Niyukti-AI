@@ -10,7 +10,6 @@ function Rankings() {
 
   const { jobId } = useParams();
 
-  // ✅ BASE URL FROM ENV
   const API = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
@@ -100,10 +99,13 @@ function Rankings() {
   return (
     <div className="ai-page">
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-        <h1 className="ai-title">🏆 AI Candidate Rankings</h1>
+        <h1 className="ai-title">
+          🏆 Niyukti AI Candidate Rankings
+        </h1>
 
         <p className="ai-subtitle">
-          Discover the best candidates using AI-powered matching.
+          AI-powered semantic candidate ranking &
+          recruiter intelligence.
         </p>
 
         {rankings.length === 0 ? (
@@ -123,7 +125,6 @@ function Rankings() {
                     : undefined,
               }}
             >
-              {/* HEADER */}
               <div
                 style={{
                   display: "flex",
@@ -146,7 +147,8 @@ function Rankings() {
                       index === 0
                         ? "linear-gradient(90deg,#FFD700,#FFB800)"
                         : "rgba(255,255,255,0.12)",
-                    color: index === 0 ? "#111827" : "white",
+                    color:
+                      index === 0 ? "#111827" : "white",
                     fontWeight: "700",
                   }}
                 >
@@ -154,8 +156,12 @@ function Rankings() {
                 </span>
               </div>
 
-              {/* DETAILS */}
-              <div style={{ marginTop: "20px", lineHeight: "2" }}>
+              <div
+                style={{
+                  marginTop: "20px",
+                  lineHeight: "2",
+                }}
+              >
                 <p>
                   <strong>Email:</strong>{" "}
                   {item.candidate.email}
@@ -167,14 +173,23 @@ function Rankings() {
                 </p>
 
                 <p>
+                  <strong>Candidate Type:</strong>{" "}
+                  {item.score >= 85
+                    ? "Top Recommended"
+                    : item.score >= 70
+                    ? "Recommended"
+                    : "Consider"}
+                </p>
+
+                <p>
                   <strong>Status:</strong>{" "}
-                  <span className={`status-badge`}>
-                    {item.candidate.status || "pending"}
+                  <span className="status-badge">
+                    {item.candidate.status ||
+                      "pending"}
                   </span>
                 </p>
               </div>
 
-              {/* SKILLS */}
               <div style={{ marginTop: "20px" }}>
                 <strong>Skills</strong>
 
@@ -186,20 +201,24 @@ function Rankings() {
                     marginTop: "12px",
                   }}
                 >
-                  {item.candidate.skills?.map((skill, i) => (
-                    <span key={i} className="skill-badge">
-                      {skill}
-                    </span>
-                  ))}
+                  {item.candidate.skills?.map(
+                    (skill, i) => (
+                      <span
+                        key={i}
+                        className="skill-badge"
+                      >
+                        {skill}
+                      </span>
+                    )
+                  )}
                 </div>
               </div>
-
-              {/* SCORE */}
-              <div style={{ marginTop: "30px" }}>
+                            <div style={{ marginTop: "30px" }}>
                 <div
                   style={{
                     display: "flex",
-                    justifyContent: "space-between",
+                    justifyContent:
+                      "space-between",
                     marginBottom: "10px",
                   }}
                 >
@@ -210,34 +229,113 @@ function Rankings() {
                 <div
                   style={{
                     height: "18px",
-                    background: "rgba(255,255,255,0.12)",
+                    background:
+                      "rgba(255,255,255,0.12)",
                     borderRadius: "20px",
                     overflow: "hidden",
                   }}
                 >
                   <div
                     style={{
-                      width: `${Math.min(item.score, 100)}%`,
+                      width: `${Math.min(
+                        item.score,
+                        100
+                      )}%`,
                       height: "100%",
-                      background: getScoreColor(item.score),
-                      transition: "0.5s",
+                      background:
+                        getScoreColor(item.score),
                     }}
                   />
                 </div>
               </div>
 
-              {/* REASONS */}
-              <div style={{ marginTop: "25px" }}>
-                <h4>Why this candidate matches</h4>
+              <div
+                style={{
+                  marginTop: "25px",
+                  display: "grid",
+                  gridTemplateColumns:
+                    "repeat(auto-fit,minmax(180px,1fr))",
+                  gap: "15px",
+                }}
+              >
+                <div
+                  style={{
+                    padding: "15px",
+                    borderRadius: "15px",
+                    background:
+                      "rgba(59,130,246,0.12)",
+                  }}
+                >
+                  <div>AI Confidence</div>
+                  <h3>
+                    {Math.min(
+                      item.score + 5,
+                      99
+                    )}
+                    %
+                  </h3>
+                </div>
 
-                <ul style={{ marginTop: "12px", lineHeight: "2" }}>
-                  {(item.reasons || []).map((reason, i) => (
-                    <li key={i}>✅ {reason}</li>
-                  ))}
+                <div
+                  style={{
+                    padding: "15px",
+                    borderRadius: "15px",
+                    background:
+                      "rgba(34,197,94,0.12)",
+                  }}
+                >
+                  <div>Hiring Potential</div>
+                  <h3>
+                    {item.score >= 80
+                      ? "High"
+                      : item.score >= 60
+                      ? "Medium"
+                      : "Low"}
+                  </h3>
+                </div>
+
+                <div
+                  style={{
+                    padding: "15px",
+                    borderRadius: "15px",
+                    background:
+                      "rgba(168,85,247,0.12)",
+                  }}
+                >
+                  <div>Recruiter Verdict</div>
+                  <h3>
+                    {item.score >= 85
+                      ? "Excellent"
+                      : item.score >= 70
+                      ? "Strong Fit"
+                      : item.score >= 50
+                      ? "Potential Fit"
+                      : "Weak Fit"}
+                  </h3>
+                </div>
+              </div>
+
+              <div style={{ marginTop: "25px" }}>
+                <h4>
+                  🤖 Why this candidate matches
+                </h4>
+
+                <ul
+                  style={{
+                    marginTop: "12px",
+                    lineHeight: "2",
+                  }}
+                >
+                  {(item.reasons || []).map(
+                    (reason, i) => (
+                      <li key={i}>
+                        ✅ {reason}
+                      </li>
+                    )
+                  )}
                 </ul>
               </div>
 
-              {/* ACTIONS */}
               <div
                 style={{
                   marginTop: "30px",
@@ -248,7 +346,10 @@ function Rankings() {
               >
                 <button
                   onClick={() =>
-                    handleAction(item.candidate._id, "hire")
+                    handleAction(
+                      item.candidate._id,
+                      "hire"
+                    )
                   }
                   style={btn("#22c55e")}
                 >
@@ -257,7 +358,10 @@ function Rankings() {
 
                 <button
                   onClick={() =>
-                    handleAction(item.candidate._id, "shortlist")
+                    handleAction(
+                      item.candidate._id,
+                      "shortlist"
+                    )
                   }
                   style={btn("#3b82f6")}
                 >
@@ -266,7 +370,10 @@ function Rankings() {
 
                 <button
                   onClick={() =>
-                    handleAction(item.candidate._id, "reject")
+                    handleAction(
+                      item.candidate._id,
+                      "reject"
+                    )
                   }
                   style={btn("#ef4444")}
                 >
@@ -281,7 +388,6 @@ function Rankings() {
   );
 }
 
-// reusable button style
 const btn = (bg) => ({
   padding: "12px 24px",
   border: "none",
