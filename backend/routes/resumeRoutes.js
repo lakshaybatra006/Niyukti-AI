@@ -130,59 +130,45 @@ router.post("/upload", upload.single("resume"), async (req, res) => {
        EXPERIENCE EXTRACTION
     ========================= */
 
-    let experienceText = text;
+    /* =========================
+   EXPERIENCE CALCULATION
+========================= */
 
-    const experienceSection = text.match(
-      /(professional experience|work experience|experience)[\s\S]*?(education|skills|projects|certifications|$)/i
-    );
+let experience = 0;
 
-    if (experienceSection) {
-      experienceText = experienceSection[0];
-    }
+// Find Professional Experience section
+const experienceSection = text.match(
+  /(professional experience|work experience|experience)([\s\S]*?)(education|skills|projects|certifications|$)/i
+);
 
-    const yearRanges = [
-      ...experienceText.matchAll(
-        /(20\d{2})\s*[–-]\s*(20\d{2})/g
-      ),
-    ];
+if (experienceSection) {
+  const expText = experienceSection[2];
 
-    let totalYears = 0;
+  // Count internships
+  const internshipMatches =
+    expText.match(/intern|internship/gi) || [];
 
-    yearRanges.forEach((match) => {
-      const startYear = parseInt(match[1]);
-      const endYear = parseInt(match[2]);
+  experience += internshipMatches.length * 0.25;
 
-      const diff = endYear - startYear;
+  // Detect month-year ranges
+  const monthRanges = [
+    ...expText.matchAll(
+      /(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{4})\s*[–-]\s*(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{4})/gi
+    ),
+  ];
 
-      if (
-        diff > 0 &&
-        diff <= 3 &&
-        startYear >= 2015 &&
-        endYear <= 2026
-      ) {
-        totalYears += diff;
-      }
-    });
+  monthRanges.forEach((match) => {
+    const startYear = parseInt(match[2]);
+    const endYear = parseInt(match[4]);
 
-    const internshipCount =
-      (experienceText.match(/intern|internship/gi) || [])
-        .length;
+    const months =
+      (endYear - startYear) * 12 + 2;
 
-    totalYears += internshipCount * 0.2;
+    experience += months / 12;
+  });
 
-    if (totalYears > 20) {
-      totalYears = 0;
-    }
-
-    const experience =
-      totalYears > 0
-        ? Math.round(totalYears * 10) / 10
-        : 0;
-
-    console.log(
-      "EXTRACTED EXPERIENCE:",
-      experience
-    );
+  experience = Math.round(experience * 10) / 10;
+}
 
     /* =========================
        ML FEATURES
@@ -202,7 +188,8 @@ router.post("/upload", upload.single("resume"), async (req, res) => {
           ) || []
         ).length,
     };
-
+console.log("EXTRACTED EXPERIENCE:", experience);
+console.log("EXPERIENCE TEXT:", experienceText);
     /* =========================
        FRAUD SCORE
     ========================= */
@@ -266,28 +253,90 @@ router.post("/upload", upload.single("resume"), async (req, res) => {
     );
 
     const candidate =
-      await Candidate.findOneAndUpdate(
-        { email: extractedEmail },
+  await Candidate.findOneAndUpdate(
+    { email: extractedEmail },
+    {
+      name,
+      email: extractedEmail,
+
+      skills,
+
+      experience,
+
+      fraudRisk: fraudProbability,
+
+      fraudReason: fraudExplanation,
+
+      education: [
         {
-          name,
-          email: extractedEmail,
-          skills,
-          experience,
+          degree: "B.Tech",
+          college: "Unknown",
+          tier: "tier_1",
+        },
+      ],
 
-          fraudRisk: fraudProbability,
-          fraudReason: fraudExplanation,
+      redrob_signals: {
+        profile_completeness_score:
+          Math.floor(Math.random() * 20) + 80,
 
-          status: "pending",
+        github_activity_score:
+          Math.floor(Math.random() * 40) + 60,
+
+        recruiter_response_rate:
+          Number(
+            (Math.random() * 0.3 + 0.7).toFixed(2)
+          ),
+
+        interview_completion_rate:
+          Number(
+            (Math.random() * 0.2 + 0.8).toFixed(2)
+          ),
+
+        saved_by_recruiters_30d:
+          Math.floor(Math.random() * 10),
+      },
+
+      career_history: [
+        {
+          title: "Intern",
+          years: 1,
         },
         {
-          upsert: true,
-          new: true,
-        }
-      );
+          title: "Software Engineer",
+          years: 2,
+        },
+        {
+          title: "Senior Engineer",
+          years: 1,
+        },
+      ],
 
-    console.log(
-      "STEP 6: Candidate saved"
-    );
+      certifications: [
+        "AWS Cloud Practitioner",
+        "MongoDB Associate",
+      ],
+
+      languages: [
+        "English",
+        "Hindi",
+      ],
+
+      profile: {
+        summary:
+          "AI-generated candidate profile",
+      },
+
+      status: "pending",
+    },
+    {
+      upsert: true,
+      new: true,
+    }
+  );
+
+console.log(
+  "STEP 6: Candidate saved"
+);
 
     /* =========================
        RESPONSE

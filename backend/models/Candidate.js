@@ -50,7 +50,30 @@ status: {
   enum: ["pending", "shortlist", "hire", "reject"],
   default: "pending",
 },
+profile: {
+  type: Object,
+  default: {},
+},
 
+career_history: {
+  type: Array,
+  default: [],
+},
+
+redrob_signals: {
+  type: Object,
+  default: {},
+},
+
+certifications: {
+  type: Array,
+  default: [],
+},
+
+languages: {
+  type: Array,
+  default: [],
+},
 
 },
 {
