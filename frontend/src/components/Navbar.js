@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Dashboard.css";
-import
+
 function Navbar() {
   return (
     <div className="navbar">
